@@ -21,9 +21,3 @@ defmodule News.Article do
     |> validate_required([:author, :title, :description, :url, :urlToImage, :publishedAt])
   end
 end
-
-
-
-# default_str = "2017-09-04T13:54:16Z"
-# Timex.parse(default_str, "{ISO:Extended}")
-# article = %News.Article{author: "Miguel Barcos", description: "description is this", publishedAt: d, title: "Breaking news", url: "foo.com", urlToImage: "bar.com"}
