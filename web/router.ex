@@ -10,7 +10,9 @@ defmodule News.Router do
   end
 
   pipeline :api do
-    plug :accepts, ["json"]
+    plug :accepts, ["json-api"]
+    plug JaSerializer.ContentTypeNegotiation
+    plug JaSerializer.Deserializer
   end
 
   scope "/", News do
@@ -23,7 +25,7 @@ defmodule News.Router do
   scope "/api", News, as: :api do
     pipe_through :api
     scope "/v1", Api.V1, as: :v1 do
-      resources "/articles", ArticleController, only: [:index, :create, :show]      
+      resources "/articles", ArticleController, only: [:index, :show]
     end
   end
 end

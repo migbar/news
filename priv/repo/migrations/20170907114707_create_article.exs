@@ -8,7 +8,7 @@ defmodule News.Repo.Migrations.CreateArticle do
       add :description, :string
       add :url, :string
       add :url_to_image, :string
-      add :pubished_at, :date
+      add :published_at, :date
 
       timestamps()
     end
