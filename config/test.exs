@@ -12,7 +12,7 @@ config :logger, level: :warn
 # Configure your database
 config :news, News.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "postgress",
+  username: "postgres",
   password: "",
   database: "news_test",
   hostname: "localhost",
