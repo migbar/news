@@ -6,8 +6,8 @@ defmodule News.Article do
     field :title, :string
     field :description, :string
     field :url, :string
-    field :urlToImage, :string
-    # field :publishedAt, :datetime
+    field :url_to_image, :string
+    # field :pubished_at, :datetime
 
     timestamps()
   end
@@ -17,7 +17,7 @@ defmodule News.Article do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:author, :title, :description, :url, :urlToImage, :publishedAt])
-    |> validate_required([:author, :title, :description, :url, :urlToImage, :publishedAt])
+    |> cast(params, [:author, :title, :description, :url, :url_to_image, :pubished_at])
+    |> validate_required([:author, :title, :description, :url, :url_to_image, :pubished_at])
   end
 end

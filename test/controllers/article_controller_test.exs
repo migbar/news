@@ -2,7 +2,7 @@ defmodule News.ArticleControllerTest do
   use News.ConnCase
 
   alias News.Article
-  @valid_attrs %{author: "some content", description: "some content", publishedAt: %{day: 17, month: 4, year: 2010}, title: "some content", url: "some content", urlToImage: "some content"}
+  @valid_attrs %{author: "some content", description: "some content", pubished_at: %{day: 17, month: 4, year: 2010}, title: "some content", url: "some content", url_to_image: "some content"}
   @invalid_attrs %{}
 
   setup %{conn: conn} do
@@ -22,8 +22,8 @@ defmodule News.ArticleControllerTest do
       "title" => article.title,
       "description" => article.description,
       "url" => article.url,
-      "urlToImage" => article.urlToImage,
-      "publishedAt" => article.publishedAt}
+      "url_to_image" => article.url_to_image,
+      "pubished_at" => article.pubished_at}
   end
 
   test "renders page not found when id is nonexistent", %{conn: conn} do

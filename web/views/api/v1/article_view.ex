@@ -15,7 +15,7 @@ defmodule News.Api.V1.ArticleView do
       title: article.title,
       description: article.description,
       url: article.url,
-      urlToImage: article.urlToImage}
-      # publishedAt: article.publishedAt}
+      url_to_image: article.url_to_image}
+      # pubished_at: article.pubished_at}
   end
 end
