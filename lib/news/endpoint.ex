@@ -38,5 +38,7 @@ defmodule News.Endpoint do
     key: "_news_key",
     signing_salt: "xdIjRJBl"
 
+  plug CORSPlug, origin: ["http://localhost:4200"]
+
   plug News.Router
 end
