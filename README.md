@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/migbar/news.svg?branch=master)](https://travis-ci.org/migbar/news)
+
 # News
 
 To start your Phoenix app:
