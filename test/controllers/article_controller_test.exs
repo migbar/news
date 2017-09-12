@@ -1,9 +1,14 @@
 defmodule News.ArticleControllerTest do
   use News.ConnCase
+  alias News.TestHelpers
 
-  alias News.Article
-  @valid_attrs %{author: "some content", description: "some content", published_at: %{day: 17, month: 4, year: 2010}, title: "some content", url: "some content", url_to_image: "some content"}
-  @invalid_attrs %{}
+  @valid_attrs %{
+    title: "this is the title",
+    author: "John Doe",
+    description: "this is the description",
+    url: "http://foo.com",
+    url_to_image: "http://bar.com"
+  }
 
   setup %{conn: conn} do
     conn =
@@ -14,20 +19,35 @@ defmodule News.ArticleControllerTest do
     {:ok, conn: conn}
   end
 
-  # test "create action", %{conn: conn} do
-  #   params = Poison.encode!(%{data: %{attributes: @valid_attrs}})
-  #   conn = post conn, "/some_resource", params
-  #
-  #   ...
-  # end
-
   test "lists all entries on index", %{conn: conn} do
+    article = TestHelpers.insert_article(@valid_attrs)
+
     conn = get conn, api_v1_article_path(conn, :index)
-    assert json_response(conn, 200)["data"] == []
+    response = json_response(conn, 200)
+
+    [%{"type" => type, "attributes" => attributes} | _tail] = response["data"]
+
+    assert response["jsonapi"] == %{"version" => "1.0"}
+
+    assert type == "article"
+  	assert attributes == %{
+      "title" => article.title,
+      "author" => article.author,
+      "description" => article.description,
+      "url" => article.url,
+      "url-to-image" => article.url_to_image
+  		}
+  end
+
+  test "returns an empty list if no articles exist", %{conn: conn} do
+    conn = get conn, api_v1_article_path(conn, :index)
+    response = json_response(conn, 200)
+    [] = response["data"]
   end
 
   test "shows chosen resource", %{conn: conn} do
-    article = Repo.insert! %Article{}
+    article = TestHelpers.insert_article(@valid_attrs)
+
     conn = get conn, api_v1_article_path(conn, :show, article)
     assert json_response(conn, 200)["data"] == %{
       "type" => "article",
