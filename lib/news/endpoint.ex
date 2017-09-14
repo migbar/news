@@ -38,7 +38,9 @@ defmodule News.Endpoint do
     key: "_news_key",
     signing_salt: "xdIjRJBl"
 
-  plug CORSPlug, origin: ["http://localhost:4200", "http://news-ui.newschips.io.s3.amazonaws.com"]
+  plug CORSPlug, origin: [
+    "http://localhost:4200",
+    "http://news-ui.newschips.io.s3-website.us-east-2.amazonaws.com"]
 
   plug News.Router
 end
