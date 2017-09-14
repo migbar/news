@@ -40,7 +40,6 @@ defmodule News.Endpoint do
 
   plug CORSPlug, origin: [
     "http://localhost:4200",
-    "http://api.newschips.io",
     "http://news-ui.newschips.io.s3.amazonaws.com",
     "http://news-ui.newschips.io.s3-website.us-east-2.amazonaws.com"]
 
