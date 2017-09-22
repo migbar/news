@@ -1,0 +1,76 @@
+defmodule News.Api.V1.SourceFetcher do
+  use HTTPoison.Base
+
+  @endpoint "https://newsapi.org"
+  @expected_fields ~w(status sources id name description url category language country)
+
+  #Overrides
+  def process_url(url) do
+    @endpoint <> url
+  end
+
+  def process_response_body(body) do
+    body
+      |> Poison.decode!
+      |> Map.take(@expected_fields)
+      |> Enum.map(fn({k, v}) -> {String.to_atom(k), v} end)
+  end
+
+  #News
+  def fetch_sources do
+    fetch_sources_json_from_api()
+      |> make_sources()
+      |> persist_sources()
+  end
+
+  defp fetch_sources_json_from_api do
+    case get("/v1/sources") do
+      {:ok, resp} ->
+        resp.body[:sources]
+      {:error, reason} ->
+        IO.puts "Received error from API"
+        IO.inspect reason
+    end
+  end
+
+  defp make_sources(sources) do
+    sources |> Enum.map(&make_source/1)
+  end
+
+  defp make_source(source) do
+    %News.Source{
+      api_id: source["id"],
+      description: source["description"],
+      category: source["category"],
+      country: source["country"],
+      language: source["language"],
+      url: source["url"],
+      name: source["name"]
+    }
+  end
+
+  defp persist_sources(sources) do
+    sources |> Enum.map(&persist_or_update_source/1)
+  end
+
+  defp persist_or_update_source(api_source) do
+    found_source = News.Repo.get_by(News.Source, api_id: api_source.api_id)
+
+    if found_source == nil do
+      News.Repo.insert!(api_source)
+    else
+      changes = %{
+        description: api_source.description,
+        category: api_source.category,
+        country: api_source.country,
+        language: api_source.language,
+        url: api_source.url,
+        name: api_source.name}
+
+      found_source
+        |> Ecto.Changeset.change(changes)
+        |> News.Repo.update
+    end
+  end
+
+end

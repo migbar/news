@@ -20,6 +20,9 @@ defmodule News do
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: News.Supervisor]
     Supervisor.start_link(children, opts)
+
+    # Start SourceServer
+    News.SourceServer.start()    
   end
 
   # Tell Phoenix to update the endpoint configuration

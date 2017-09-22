@@ -2,9 +2,10 @@ defmodule News.Api.V1.SourceController do
   use News.Web, :controller
 
   alias News.Source
+  alias News.SourceServer
 
   def index(conn, _params) do
-    sources = Repo.all(Source)
+    sources = SourceServer.get_sources()
     render conn, "index.json-api", data: sources
   end
 

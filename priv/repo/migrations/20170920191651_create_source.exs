@@ -3,6 +3,7 @@ defmodule News.Repo.Migrations.CreateSource do
 
   def change do
     create table(:sources) do
+      add :api_id, :string
       add :name, :string
       add :description, :binary
       add :url, :string
