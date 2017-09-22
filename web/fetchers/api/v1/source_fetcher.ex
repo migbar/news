@@ -38,6 +38,7 @@ defmodule News.Api.V1.SourceFetcher do
         IO.puts "Received error from API"
         IO.inspect reason
         IO.puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+        []
     end
   end
 
