@@ -57,20 +57,26 @@ defmodule News.Api.V1.SourceFetcher do
     found_source = News.Repo.get_by(News.Source, api_id: api_source.api_id)
 
     if found_source == nil do
-      News.Repo.insert!(api_source)
+      api_source
+        |> News.Repo.insert!
     else
-      changes = %{
-        description: api_source.description,
-        category: api_source.category,
-        country: api_source.country,
-        language: api_source.language,
-        url: api_source.url,
-        name: api_source.name}
+      changes = changes_from(api_source)
 
       found_source
         |> Ecto.Changeset.change(changes)
-        |> News.Repo.update
+        |> News.Repo.update!
     end
+  end
+
+  defp changes_from(api_source) do
+    %{
+      description: api_source.description,
+      category: api_source.category,
+      country: api_source.country,
+      language: api_source.language,
+      url: api_source.url,
+      name: api_source.name
+    }
   end
 
 end
