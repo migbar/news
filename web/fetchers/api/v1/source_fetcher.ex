@@ -25,11 +25,19 @@ defmodule News.Api.V1.SourceFetcher do
 
   defp fetch_sources_json_from_api do
     case get("/v1/sources") do
+
       {:ok, resp} ->
+        IO.puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+        IO.puts "Sources from API"
+        IO.inspect resp.body[:sources]
+        IO.puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^"
         resp.body[:sources]
+
       {:error, reason} ->
+        IO.puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^"
         IO.puts "Received error from API"
         IO.inspect reason
+        IO.puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^"
     end
   end
 
