@@ -4,9 +4,6 @@ defmodule News.Api.V1.SourceFetcher do
   @endpoint "https://newsapi.org"
   @expected_fields ~w(status sources id name description url category language country)
 
-  # @endpoint "https://api.github.com"
-  # @expected_fields ~w(login id avatar_url gravatar_id name)
-
   #Overrides
   def process_url(url) do
     @endpoint <> url
@@ -28,18 +25,12 @@ defmodule News.Api.V1.SourceFetcher do
 
   defp fetch_sources_json_from_api do
     case get("/v1/sources") do
-    # case get("/users/migbar") do
 
       {:ok, resp} ->
-        IO.puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^"
-        IO.puts "Response from API"
-        IO.inspect resp.body
-        IO.puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^"
         resp.body
 
       {:error, reason} ->
-        IO.puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^"
-        IO.puts "Received error from API"
+        IO.puts "^^^^^^^ ERROR ^^^^^^^^^^^^^"
         IO.inspect reason
         IO.puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^"
         []
