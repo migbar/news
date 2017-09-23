@@ -1,8 +1,11 @@
 defmodule News.Api.V1.SourceFetcher do
   use HTTPoison.Base
 
-  @endpoint "https://newsapi.org"
-  @expected_fields ~w(status sources id name description url category language country)
+  # @endpoint "https://newsapi.org"
+  # @expected_fields ~w(status sources id name description url category language country)
+
+  @endpoint "https://api.github.com"
+  @expected_fields ~w(login id avatar_url gravatar_id name)
 
   #Overrides
   def process_url(url) do
@@ -24,14 +27,16 @@ defmodule News.Api.V1.SourceFetcher do
   end
 
   defp fetch_sources_json_from_api do
-    case get("/v1/sources") do
+    # case get("/v1/sources") do
+    case get("/users/migbar") do
 
       {:ok, resp} ->
         IO.puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^"
-        IO.puts "Sources from API"
-        IO.inspect resp.body[:sources]
+        IO.puts "Resp from API"
+        # IO.inspect resp.body[:sources]
+        IO.inspect resp.body
         IO.puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^"
-        resp.body[:sources]
+        []
 
       {:error, reason} ->
         IO.puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^"
