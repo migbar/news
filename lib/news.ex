@@ -22,7 +22,8 @@ defmodule News do
     Supervisor.start_link(children, opts)
 
     # Start SourceServer
-    News.SourceServer.start()    
+    News.WebhoseServer.start()    
+    # News.SourceServer.start()
   end
 
   # Tell Phoenix to update the endpoint configuration
